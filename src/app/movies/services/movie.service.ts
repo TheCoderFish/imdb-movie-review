@@ -1,31 +1,34 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { pluck, mergeMap, map, reduce, tap, filter, take } from 'rxjs/operators';
+import { Movie } from '../movie.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
 
-  private MOVIE_LIST = [
-    {
-      name: 'Avenger',
-      year: 2019,
-      descriptin: 'marvel'
-    },
-    {
-      name: 'War',
-      year: 2019,
-      descriptin: 'bollywood'
-    },
-  ]
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getMovies() {
-    return of([...this.MOVIE_LIST]);
+  getMovieList(query: string) {
+    return this.http.get(`http://www.omdbapi.com/?s=${query}&apikey=45b4879a`).pipe(
+     filter((response:any) => response.Response === 'True'),
+      pluck('Search'),
+      mergeMap((asIs: any[]) => asIs),
+      take(5),
+      mergeMap((movie: any) => {
+        return this.getMovieById(movie.imdbID)
+      }),
+      map((movie: any) => {
+        const { imdbRating, Title, Year, Rated, Runtime, Genre, Director, Actors, Plot } = movie;
+        return new Movie(imdbRating, Title, Year, Rated, Runtime, Genre, Director, Actors, Plot)
+      }),
+      reduce((acc: Movie[], movie) => [...acc, movie], []),
+    );;
   }
 
-  getInitialMovieList(){
-    return this.http.get(`http://www.omdbapi.com/?s=love&apikey=45b4879a`);
+  getMovieById(id: string) {
+    return this.http.get(`http://www.omdbapi.com/?i=${id}&apikey=45b4879a`);
   }
 }
