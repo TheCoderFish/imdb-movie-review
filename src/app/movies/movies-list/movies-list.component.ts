@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { QueryStringService } from 'src/app/services/query-string.service';
+import { MovieService } from '../services/movie.service';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movies-list',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoviesListComponent implements OnInit {
 
-  constructor() { }
+  public moviesList:Observable<any>;
+
+  constructor(private movieService: MovieService,
+    private queryStringService: QueryStringService) { }
 
   ngOnInit() {
+    this.moviesList = this.movieService.getMovies();
+
+    this.moviesList =this.movieService.getInitialMovieList().pipe(pluck('Search'));
   }
 
 }

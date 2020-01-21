@@ -1,1 +1,6 @@
-<p>movies-list works!</p>
+<ng-container *ngFor="let movie of moviesList | async;let i=index">
+    <div>
+        <h1>{{movie.Title}}</h1>
+        <p>{{movie | json}}</p>
+    </div>
+</ng-container>
