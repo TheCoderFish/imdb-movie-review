@@ -27,6 +27,7 @@
     font-size: 36px;
     padding-bottom: 6px;
     color: #333333;
+    font-size: 1.5em;
 }
 
 .moviecard .movie-title .movie-year {
@@ -240,4 +241,14 @@
     width: 100%;
     opacity: 1;
     padding-left: 300px;
+}
+
+.movie-review {
+    text-align: center;
+    .movie-review-btn {
+        background-color: white;
+        padding: 1em;
+        border-radius: 0.1em;
+        font-weight: bold;
+    }
 }

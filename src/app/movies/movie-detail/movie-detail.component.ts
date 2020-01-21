@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Movie } from '../movie.model';
 
 @Component({
   selector: 'app-movie-detail',
@@ -7,17 +8,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MovieDetailComponent implements OnInit {
 
-  @Input() public set movie(movie:any){
+  @Input() public set movie(movie:Movie){
     if(movie){
       this._movie = movie;
     }
   };
 
-  public get movie(){
+  public get movie():Movie{
     return this._movie;
   }
 
-  private _movie:any;
+  private _movie:Movie;
 
   constructor() { }
 

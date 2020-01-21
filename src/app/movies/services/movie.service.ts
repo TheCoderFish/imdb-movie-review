@@ -9,11 +9,26 @@ import { Movie } from '../movie.model';
 })
 export class MovieService {
 
+  private MOVIE = {
+    Title: " Batman Begins",
+    Year: "2005",
+    Rated: "PG-13",
+    Runtime: "140 min",
+    Genre: "Action, Adventure",
+    irector: "Christopher Nolan",
+    Writer: "Bob Kane (characters), David S. Goyer (story), Christopher Nolan (screenplay), David S. Goyer (screenplay)",
+    Actors: "Christian Bale, Michael Caine, Liam Neeson, Katie Holmes",
+    Plot: "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption.",
+    imdbRating: "8.2",
+    imdbID: "tt0372784"
+  }
+
   constructor(private http: HttpClient) { }
 
   getMovieList(query: string) {
+    return of([this.MOVIE]);
     return this.http.get(`http://www.omdbapi.com/?s=${query}&apikey=45b4879a`).pipe(
-     filter((response:any) => response.Response === 'True'),
+      filter((response: any) => response.Response === 'True'),
       pluck('Search'),
       mergeMap((asIs: any[]) => asIs),
       take(5),
@@ -21,8 +36,8 @@ export class MovieService {
         return this.getMovieById(movie.imdbID)
       }),
       map((movie: any) => {
-        const { imdbRating, Title, Year, Rated, Runtime, Genre, Director, Actors, Plot } = movie;
-        return new Movie(imdbRating, Title, Year, Rated, Runtime, Genre, Director, Actors, Plot)
+        const { imdbRating, imdbID, Title, Year, Rated, Runtime, Genre, Director, Writer, Actors, Plot } = movie;
+        return new Movie(imdbRating, Title, Year, Rated, Runtime, Genre, Director, Writer, Actors, Plot, imdbID)
       }),
       reduce((acc: Movie[], movie) => [...acc, movie], []),
     );;
