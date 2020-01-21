@@ -1,0 +1,27 @@
+.header-container {
+    background-color: black;
+    display: flex;
+    padding: 0.8em;
+    justify-content: start;
+    a {
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        background-color: #DBA506;
+        text-decoration: none;
+        display: block;
+        color: black;
+        padding: 0.2em;
+        border-radius: 0.2em;
+        font-weight: bolder;
+        font-size: 1.4rem;
+        width: 65px;
+    }
+    input {
+        flex: 1 1 600px;
+        display: block;
+        width: 100%;
+        max-width: 600px;
+        height: 35px;
+        margin-left: 10px;
+        border-radius: 0.2em;
+    }
+}

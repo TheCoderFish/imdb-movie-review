@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { QueryStringService } from '../services/query-string.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  public searchQuery: FormControl;
+
+
+  constructor(private queryStringService: QueryStringService) {
+
+  }
 
   ngOnInit() {
+    this.searchQuery = new FormControl('');
+
+    this.searchQuery.valueChanges.subscribe((queryString: string) => {
+      this.queryStringService.query = queryString;
+    });
   }
 
 }
