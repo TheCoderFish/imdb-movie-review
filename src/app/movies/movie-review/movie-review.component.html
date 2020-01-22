@@ -1,1 +1,7 @@
-<p>movie-review works!</p>
+<form>
+    <input [formControl]="review" type="text">
+    <button type="button" (click)="submitReview()">Submit Review</button>
+</form>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>

@@ -11,7 +11,8 @@ export class Movie {
     public Actors?: string,
     public Plot?: string,
     public imdbID?: string,
+    public imdbLink?: string,
   ) {
-    this.imdbID = `http://www.imdb.com/title/${this.imdbID}`
-   }
+    this.imdbLink = `http://www.imdb.com/title/${this.imdbID}`
+  }
 }
