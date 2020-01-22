@@ -9,7 +9,7 @@ import { config } from 'rxjs';
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.scss']
 })
-export class MovieDetailComponent implements OnInit {
+export class MovieDetailComponent {
 
   @Input() public set movie(movie: Movie) {
     if (movie) {
@@ -17,27 +17,25 @@ export class MovieDetailComponent implements OnInit {
     }
   };
 
-  public get movie(): Movie {
+  public get movie():Movie{
     return this._movie;
   }
 
   private _movie: Movie;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal) { }
 
-  }
-
-  ngOnInit() {
-  }
-
-  openReviewModal() {
+  public openReviewModal() {
+    //Configuration for modal, can be moved to a class/service and apply with useClass/useValue
     const config = {
       backdrop: true,
-      windowClass:'custom-class',
-      backdropClass:'backdrop'
+      windowClass: 'custom-class',
+      backdropClass: 'backdrop'
     }
     const modalRef: NgbModalRef = this.modalService.open(MovieReviewComponent, config);
     const reviewInstance: MovieReviewComponent = modalRef.componentInstance;
+
+    //Setting movie property of the movie-review component
     reviewInstance.movie = this.movie;
   }
 

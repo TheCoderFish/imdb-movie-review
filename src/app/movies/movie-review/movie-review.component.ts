@@ -9,37 +9,34 @@ import { StorageService } from '../services/storage.service';
   templateUrl: './movie-review.component.html',
   styleUrls: ['./movie-review.component.scss']
 })
-export class MovieReviewComponent implements OnInit {
+export class MovieReviewComponent{
 
   @Input() public set movie(movie: Movie) {
     if (movie) {
       this._movie = movie;
     }
   }
-
   public get movie(): Movie {
     return this._movie
   }
-
   private _movie: Movie;
-
   public review = new FormControl('');
 
+  constructor(public storageService: StorageService,
+              public activeModal: NgbActiveModal) { }
 
-  constructor(public storageService:StorageService,
-    public activeModal: NgbActiveModal) { }
-
-  ngOnInit() {
-  }
-
+  /**
+   * submitReview
+   * Use the localStorageService to store the review
+   * Close the modal after it
+   */
   public submitReview() {
     this.storageService.storeReview({
-      id:this.movie.imdbID,
-      title:this.movie.Title,
-      review:this.review.value
+      id: this.movie.imdbID,
+      title: this.movie.Title,
+      review: this.review.value
     });
     this.activeModal.dismiss();
-    //id,review,name
   }
 
 }

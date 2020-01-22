@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { pluck, mergeMap, map, reduce, tap, filter, take } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { filter, map, mergeMap, pluck, reduce, take, tap } from 'rxjs/operators';
 import { Movie } from '../movie.model';
 
 @Injectable({
@@ -9,25 +9,19 @@ import { Movie } from '../movie.model';
 })
 export class MovieService {
 
-  private MOVIE = {
-    Title: " Batman Begins",
-    Year: "2005",
-    Rated: "PG-13",
-    Runtime: "140 min",
-    Genre: "Action, Adventure",
-    irector: "Christopher Nolan",
-    Writer: "Bob Kane (characters), David S. Goyer (story), Christopher Nolan (screenplay), David S. Goyer (screenplay)",
-    Actors: "Christian Bale, Michael Caine, Liam Neeson, Katie Holmes",
-    Plot: "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption.",
-    imdbRating: "8.2",
-    imdbID: "tt0372784"
-  }
+  private apiKey:string = '45b4879a';
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * getMovieList
+   * @param query input query from header
+   * RxJS stream manipulations
+   * Open the console.log to see what is recieved from the api
+   */
   getMovieList(query: string) {
-    return of([this.MOVIE]);
-    return this.http.get(`http://www.omdbapi.com/?s=${query}&apikey=45b4879a`).pipe(
+    return this.http.get<any[]>(`http://www.omdbapi.com/?s=${query}&apikey=${this.apiKey}`).pipe(
+      tap(console.log),
       filter((response: any) => response.Response === 'True'),
       pluck('Search'),
       mergeMap((asIs: any[]) => asIs),
@@ -43,7 +37,12 @@ export class MovieService {
     );;
   }
 
-  getMovieById(id: string) {
-    return this.http.get(`http://www.omdbapi.com/?i=${id}&apikey=45b4879a`);
+  /**
+   * getMovieById
+   * @param id imdb movie id
+   * Gets movie by id, used by movie list internally
+   */
+  getMovieById(id: string): Observable<any> {
+    return this.http.get(`http://www.omdbapi.com/?i=${id}&apikey=${this.apiKey}`);
   }
 }
