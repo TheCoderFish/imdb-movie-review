@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.custom-class {
+    position: fixed;
+    top: 20%;
+    left: 35%;
+    margin: 0 auto;
+    z-index: 1051;
+    padding: 20px;
+    border: 2px solid gray;
+    border-radius: 0.4em;
+    background-color: white;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    z-index: 1000;
+}

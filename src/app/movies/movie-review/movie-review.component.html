@@ -1,0 +1,10 @@
+<div class="review-container">
+    <label for="movie-review" class="review-label"> Enter Your Review for the movie {{movie.Title | uppercase}}</label>
+    <div class="input-area">
+        <textarea id="movie-review" [formControl]="review" type="text"></textarea>
+    </div>
+    <button id="submit-review" class="btn" type="button" (click)="submitReview()">Submit Review</button>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="moviecard">
+    <div id="movie-content">
+        <div class="movie-ratings"><span class="star">★</span><span class="score">{{movie.imdbRating}}</span><span class="score-out-of">/ 10 (IMDB)</span></div>
+        <div class="movie-title"><a [href]="movie.imdbLink" target="_blank">{{movie.Title}}</a><span class="movie-year">{{movie.Year}}</span></div>
+        <div class="movie-details"><span class="movie-rating">{{movie.Rated}}</span><span class="movie-duration">{{movie.Runtime}}</span><span class="movie-genre">{{movie.Genre}}</span></div>
+        <div class="movie-castcrew"><span class="title">Director</span><span class="name">{{movie.Director}}</span></div>
+        <div class="movie-castcrew"><span class="title">Writer</span><span class="name">{{movie.Writer}}</span></div>
+        <div class="movie-castcrew"><span class="title">Cast</span><span class="name">{{movie.Actors}}</span></div>
+        <div class="movie-synopsis">{{movie.Plot}}</div>
+        <div class="movie-review">
+            <button class="movie-review-btn" (click)="openReviewModal()">Review</button>
+        </div>
+    </div>
+</div>
