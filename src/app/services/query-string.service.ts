@@ -28,7 +28,7 @@ export class QueryStringService {
 
   public getQueryString() {
     return this.queryString$.pipe(
-      filter((query: string) => query.length > 3),
+      filter((query: string) => query.length > 0),
       distinctUntilChanged(),
       debounceTime(400),
       map((query: string) => query.toLowerCase().trim())

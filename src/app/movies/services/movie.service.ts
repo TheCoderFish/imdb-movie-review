@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map, mergeMap, pluck, reduce, take, tap } from 'rxjs/operators';
 import { Movie } from '../movie.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class MovieService {
 
   private apiKey:string = '45b4879a';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private spinner:NgxSpinnerService) { }
 
   /**
    * getMovieList
@@ -22,6 +24,7 @@ export class MovieService {
   getMovieList(query: string) {
     return this.http.get<any[]>(`http://www.omdbapi.com/?s=${query}&apikey=${this.apiKey}`).pipe(
       tap(console.log),
+      tap(()=>this.spinner.show()),
       filter((response: any) => response.Response === 'True'),
       pluck('Search'),
       mergeMap((asIs: any[]) => asIs),
@@ -34,6 +37,7 @@ export class MovieService {
         return new Movie(imdbRating, Title, Year, Rated, Runtime, Genre, Director, Writer, Actors, Plot, imdbID)
       }),
       reduce((acc: Movie[], movie) => [...acc, movie], []),
+      tap(()=>this.spinner.hide()),
     );;
   }
 
