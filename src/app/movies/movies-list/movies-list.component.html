@@ -1,3 +1,8 @@
-<ng-container *ngFor="let movie of moviesList | async;let i=index">
-    <app-movie-detail [movie]="movie"></app-movie-detail>
+<ng-container *ngIf="(moviesList| async)?.length > 0; else noRecord">
+    <ng-container *ngFor="let movie of moviesList | async;let i=index">
+        <app-movie-detail [movie]="movie"></app-movie-detail>
+    </ng-container>
 </ng-container>
+<ng-template #noRecord>
+    <h1>No Movies Found/Type complete and correct spelling</h1>
+</ng-template>
