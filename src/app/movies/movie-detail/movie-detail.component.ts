@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Movie } from '../movie.model';
 import { MovieReviewComponent } from '../movie-review/movie-review.component';
 import { NgbModal, NgbModalConfig, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { config } from 'rxjs';
 
 @Component({
   selector: 'app-movie-detail',
@@ -22,17 +23,20 @@ export class MovieDetailComponent implements OnInit {
 
   private _movie: Movie;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal) {
-    config.backdrop = true;
-    config.centered = true;
-    config.size = 'xl';
+  constructor(private modalService: NgbModal) {
+
   }
 
   ngOnInit() {
   }
 
   openReviewModal() {
-    const modalRef: NgbModalRef = this.modalService.open(MovieReviewComponent);
+    const config = {
+      backdrop: true,
+      windowClass:'custom-class',
+      backdropClass:'backdrop'
+    }
+    const modalRef: NgbModalRef = this.modalService.open(MovieReviewComponent, config);
     const reviewInstance: MovieReviewComponent = modalRef.componentInstance;
     reviewInstance.movie = this.movie;
   }
